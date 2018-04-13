@@ -3,8 +3,8 @@ const fs = require('fs');
 var logFile = fs.createWriteStream('/var/www/html/index.html', { flags: 'a' });
 // const
 binance.options({
-  'APIKEY':'ydkBJ2gP4nIoZtzILlPdUUWDyU72SDCEQl8uWzU9kPyymEnblvGs0PIHmYQqiWwh',
-  'APISECRET':'c2riFb8tYMGwYrq7G59ax1mVKzCKOokoP8btpwCn3JVtrfZSlr8pmdo4mlmSBxuN',
+  'APIKEY':'#',
+  'APISECRET':'#',
   // 'test':true
 });
 let currentTime = null;
