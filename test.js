@@ -69,7 +69,7 @@ function main(coinName){
                 if (buyHistory[coin_name] !== undefined) {
                     currentType = buyHistory[coin_name];
                 }
-		console.log(coin_name, " ", percentChange, "%");                
+		// console.log(coin_name, " ", percentChange, "%");                
                 check_decrease(coin_name, - percentChange, currentType);
                 
                 if ( - percentChange > 99 && currentType < 99) {
