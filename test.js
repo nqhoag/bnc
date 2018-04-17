@@ -1,6 +1,7 @@
 const binance = require('node-binance-api');
 const fs = require('fs');
 var logFile = fs.createWriteStream('/var/www/html/index.html', { flags: 'a' });
+var connectstatus = fs.createWriteStream('/var/www/html/connect.html', { flags: 'w' });
 // const
 binance.options({
   'APIKEY':'#',
@@ -9,9 +10,16 @@ binance.options({
 });
 let currentTime = null;
 let buyHistory = [];
+let i = 0;
 
 setInterval(function(){
         let sub = binance.websockets.subscriptions();
+	i++;
+	if (i > 60) {
+	    let date = new Date(currentTime);
+	    connectstatus.write('<br/> Ping at:  ' + date.toLocaleDateString() + ' ' + date.getHours() + ':' + date.getMinutes());
+	    i = 0;
+	}
         binance.prices((error, ticker) => {
             for (var coinName in ticker) {
                 binance.candlesticks(coinName, "1d", (error, ticks, symbol) => {
@@ -36,8 +44,7 @@ function main(coinName){
             let main_coin = coin_name.slice(-3);
             let main_price = 0;
             let percentChange = (close - open)/open*100;
-            
-            
+		
             if (main_coin == "BTC") {
                 main_price = 0.0015;
                  // Buy 0.002 BTC
@@ -49,13 +56,11 @@ function main(coinName){
                 return;
             }
             if (main_price != 0) {
-                let eventTime = new Date(time);
-                let day = eventTime.getDate()
-                let month = eventTime.getMonth() + 1
-                let year = eventTime.getFullYear()
-                let eventDate = year + "/" + month + "/" + day;
-                if (currentTime < eventDate || currentTime == null) {
-                    currentTime = eventDate;
+                if (currentTime < time || currentTime == null) {
+		    fs.truncate('/var/www/html/connect.html', 0, function(){
+			//console.log('done');
+		    })
+                    currentTime = time;
                     buyHistory = [];
                     logFile.write('<br/>[INFO] ' + "Start for " + eventDate);
                 }
