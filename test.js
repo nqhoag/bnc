@@ -17,7 +17,8 @@ setInterval(function(){
 	i++;
 	if (i > 60) {
 	    let date = new Date(currentTime);
-	    connectstatus.write('<br/> Ping at:  ' + date.toLocaleDateString() + ' ' + date.getHours() + ':' + date.getMinutes());
+	    let d = new Date()
+	    connectstatus.write('<br/> Ping at:  ' + date.toLocaleDateString() + ' ' + d.getHours() + ':' + d.getMinutes());
 	    i = 0;
 	}
         binance.prices((error, ticker) => {
