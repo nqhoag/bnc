@@ -63,7 +63,7 @@ function main(coinName){
 		    })
                     currentTime = time;
                     buyHistory = [];
-                    logFile.write('<br/>[INFO] ' + "Start for " + eventDate);
+                    logFile.write('<br/>[INFO] ' + "Start for " + (new Date(currentTime)).toLocaleDateString());
                 }
                 
                 let currentType = 0;
